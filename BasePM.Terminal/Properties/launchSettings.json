@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BasePM.Terminal": {
+      "commandName": "Project",
+      "commandLineArgs": "userstory create"
+    }
+  }
+}
