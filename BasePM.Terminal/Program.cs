@@ -15,12 +15,12 @@ var app = new CommandApp();
 app.Configure(config =>
 {
     config.AddBranch("userstory", sub => {
-        sub.AddCommand<AddCommand>("add");
+        sub.AddCommand<CreateCommand>("create");
     });
 });
 return app.Run(args);
 
-public class AddCommand : Command<AddCommand.Settings>
+public class CreateCommand : Command<CreateCommand.Settings>
 {
     public class Settings : CommandSettings
     {
@@ -30,31 +30,25 @@ public class AddCommand : Command<AddCommand.Settings>
 
     public override int Execute(CommandContext context, Settings settings)
     {
-        var asA = AnsiConsole.Ask<string>("As a?: ");
-        var iWant = AnsiConsole.Ask<string>("I want?: ");
-        var soThat = AnsiConsole.Ask<string>("So that?: ");
-
-        // output the story in yellow. concat the strings with a space between them
-        AnsiConsole.MarkupLine($"[yellow]As a[/] {asA}, [yellow]I want[/] {iWant}, [yellow]So that[/] {soThat}");
+        // Display a header: Summary
+        AnsiConsole.MarkupLine("[bold underline]Summary[/]");
+        var asA = AnsiConsole.Ask<string>("[yellow]As a?:[/] ");
+        var iWant = AnsiConsole.Ask<string>("[yellow]I want?:[/] ");
+        var soThat = AnsiConsole.Ask<string>("[yellow]So that?:[/] ");
         
+        // Display a header: Acceptance Criteria
+        AnsiConsole.MarkupLine("[bold underline]Acceptance Criteria[/]");
         // capture acceptance criteria in the following manner:
         // What user interaction is required?
-        var userInteraction = AnsiConsole.Ask<string>("What user interaction is required?: ");
+        var userInteraction = AnsiConsole.Ask<string>("[yellow]What user interaction is required?:[/] ");
         // what api interaction is required?
-        var apiInteraction = AnsiConsole.Ask<string>("What api interaction is required?: ");
+        var apiInteraction = AnsiConsole.Ask<string>("[yellow]What api interaction is required?:[/] ");
         // What validation is required?
-        var validation = AnsiConsole.Ask<string>("What validation is required?: ");
+        var validation = AnsiConsole.Ask<string>("[yellow]What validation is required?:[/] ");
         // What error handling is required?
-        var errorHandling = AnsiConsole.Ask<string>("What error handling is required?: ");
+        var errorHandling = AnsiConsole.Ask<string>("[yellow]What error handling is required?:[/] ");
         // What edge cases are there?
-        var edgeCases = AnsiConsole.Ask<string>("What edge cases are there?: ");
-
-        // output the acceptance criteria in yellow. concat the strings with new lines between them
-        AnsiConsole.MarkupLine($"[yellow]What user interaction is required?[/] {userInteraction}\n" +
-                                $"[yellow]What api interaction is required?[/] {apiInteraction}\n" +
-                               $"[yellow]What validation is required?[/] {validation}\n" +
-                               $"[yellow]What error handling is required?[/] {errorHandling}\n" +
-                               $"[yellow]What edge cases are there?[/] {edgeCases}");
+        var edgeCases = AnsiConsole.Ask<string>("[yellow]What edge cases are there?:[/] ");
 
         // create user story object
         var userStory = new UserStory
